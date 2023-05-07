@@ -1,20 +1,42 @@
-import Transaction from './Transaction';
-import { TableTransaction } from './TransactionHistory.styled';
-import { type } from '@testing-library/user-event/dist/type';
+import {
+  TableTransaction,
+  TableTransactiontr,
+  TableHead,
+  TableBody,
+} from './TransactionHistory.styled';
+import PropTypes from 'prop-types';
 
-export const TableTransaction = transactions => {
+export const TableTransactionHistory = ({ transactions }) => {
   return (
-    <table class="transaction-history">
-      <thead>
-        <tr>
+    <TableTransaction>
+      <TableHead>
+        <TableTransactiontr>
           <th>Type</th>
           <th>Amount</th>
           <th>Currency</th>
-        </tr>
-          </thead>
-          {transactions.map(({type, amount, currency, id}) => {
-              return ({<Transaction type={type} amount={amount} currency={currency} id={id} />})
-          })}
-    </table>
+        </TableTransactiontr>
+      </TableHead>
+      <TableBody>
+        {transactions.map(({ type, amount, currency, id }) => {
+          return (
+            <TableTransactiontr key={id}>
+              <td>{type}</td>
+              <td>{amount}</td>
+              <td>{currency}</td>
+            </TableTransactiontr>
+          );
+        })}
+      </TableBody>
+    </TableTransaction>
   );
+};
+
+TableTransactionHistory.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      amount: PropTypes.string.isRequired,
+      currency: PropTypes.string.isRequired,
+    })
+  ),
 };
